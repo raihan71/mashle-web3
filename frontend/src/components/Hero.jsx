@@ -1,15 +1,34 @@
-import React from 'react';
+import { useState } from 'react';
 import { AiFillPlayCircle } from 'react-icons/ai';
 import { SiEthereum } from 'react-icons/si';
 import { BsInfoCircle } from 'react-icons/bs';
+import Loader from './Loader';
 
 const commonStyle =
   'min-h-[70px] sm:px-0 px-2 sm:min-w-[120px] flex justify-center items-center border-[0.5px] border-gray-400 text-sm font-light text-white';
 
+const Input = ({ placeholder, name, type, value, handleChange }) => (
+  <input
+    placeholder={placeholder}
+    type={type}
+    step="0.0001"
+    value={value}
+    onChange={(e) => handleChange(e, name)}
+    className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism"
+  />
+);
+
 const Hero = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleConnectWallet = () => {
     // Logic to connect wallet goes here
     console.log('Connect Wallet button clicked');
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
   };
 
   return (
@@ -58,33 +77,41 @@ const Hero = () => {
           </div>
         </div>
         <div className="p-5 sm:w-96 w-full flex flex-col justify-start items-center blue-glassmorphism">
-          <input
-            type="text"
+          <Input
             placeholder="Address To"
-            className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism"
+            name="addressTo"
+            type="text"
+            handleChange={() => {}}
           />
-          <input
-            type="number"
+          <Input
             placeholder="Amount (ETH)"
-            className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism"
+            name="amount"
+            type="number"
+            handleChange={() => {}}
           />
-          <input
-            type="text"
+          <Input
             placeholder="Keyword (Gif)"
-            className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism"
-          />
-          <input
+            name="keyword"
             type="text"
+            handleChange={() => {}}
+          />
+          <Input
             placeholder="Enter Message"
-            className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism"
+            name="message"
+            type="text"
+            handleChange={() => {}}
           />
           <div className="h-[1px] w-full bg-gray-400 my-2" />
-          <button
-            type="button"
-            onClick={() => {}}
-            className="text-white w-full mt-2 border-[1px] p-2 border-[#3d4f7c] rounded-full cursor-pointer hover:bg-[#3d4f7c]">
-            Send Now
-          </button>
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <button
+              type="button"
+              onClick={handleSubmit}
+              className="text-white w-full mt-2 border-[1px] p-2 border-[#3d4f7c] rounded-full cursor-pointer hover:bg-[#3d4f7c]">
+              Send Now
+            </button>
+          )}
         </div>
       </div>
     </div>
